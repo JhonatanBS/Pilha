@@ -11,6 +11,7 @@ typedef struct pilha Pilha;
 Pilha* push(Pilha* p);
 Pilha* pop(Pilha* p);
 void imprime(Pilha* p);
+void tamanho(Pilha* p);
 void menu();
 
 int main(){
@@ -35,6 +36,8 @@ int main(){
          case 3:
          imprime(P);
              break;
+         case 4:
+         tamanho(P);
               }
          }while(opcao != 0);
 
@@ -79,6 +82,17 @@ void imprime(Pilha* p){
          printf("-> NULL");
 }
 
+void tamanho(Pilha* p){
+    Pilha* aux = p;
+    int tamanho = 0;
+
+    while(aux != NULL){
+     aux = aux->prox;
+     tamanho++;
+    }
+    printf("\nO tamanho da Pilha é %d",tamanho);
+}
+
 void menu(){
-    printf("\n\n Menu\n 0 - Sair\n 1 - Push\n 2 - Pop\n 3 - Imprime\n");
+    printf("\n\n Menu\n 0 - Sair\n 1 - Push\n 2 - Pop\n 3 - Imprime\n 4 - Tamanho\n");
 }
