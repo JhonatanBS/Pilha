@@ -10,13 +10,14 @@ typedef struct pilha Pilha;
 
 Pilha* push(Pilha* p);
 Pilha* pop(Pilha* p);
+Pilha* remover(Pilha* p, int numero);
 void imprime(Pilha* p);
 void tamanho(Pilha* p);
 void menu();
 
 int main(){
      Pilha* P = NULL;
-     int opcao;
+     int opcao,num;
 
          do{
              menu();
@@ -34,10 +35,16 @@ int main(){
          P = pop(P);
              break;
          case 3:
-         imprime(P);
+             printf("Digite o número para remover:");
+             scanf("%d", &num);
+         P = remover(P,num);   
              break;
          case 4:
          tamanho(P);
+             break;
+         case 5:
+         imprime(P);
+             break;
               }
          }while(opcao != 0);
 
@@ -67,6 +74,40 @@ Pilha* pop(Pilha* p){
  return p;
 }
 
+Pilha* remover(Pilha* p, int numero){
+   if(p == NULL){
+       printf("Pilha Vazia!");
+       return p;
+   }
+   Pilha* aux = p;
+   //remove o ultimo elemento da Pilha
+   if(aux->valor == numero){
+       p = p->prox;
+       free(aux);
+       return p;
+   }
+   Pilha* atual = p, *ant = atual;
+
+   while(atual != NULL && atual->valor != numero){
+       ant = atual;
+       atual = atual->prox;
+   }
+   
+   if(atual == NULL){
+       printf("Elemento não encontrado!");
+       return p;
+   }
+   else if(atual->prox != NULL){
+       ant->prox = atual->prox;
+       return p;
+   }else if(atual->prox == NULL){
+        ant->prox = NULL;
+        free(atual);
+        return p;
+   }
+   return p;
+}
+
 void imprime(Pilha* p){
      Pilha *aux = p;
      if(p == NULL){
@@ -94,5 +135,5 @@ void tamanho(Pilha* p){
 }
 
 void menu(){
-    printf("\n\n Menu\n 0 - Sair\n 1 - Push\n 2 - Pop\n 3 - Imprime\n 4 - Tamanho\n");
+    printf("\n\n Menu\n 0 - Sair\n 1 - Push\n 2 - Pop\n 3 - Remover qualquer elemento\n 4 - Tamanho\n 5 - Imprime\n");
 }
